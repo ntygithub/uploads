@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - walls
+  - floors
+  - death
+  - dontinvolve
+  - enemies
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: background far far
+    uniqueID: 3631964357
+    locked: 0
+  - name: background far
+    uniqueID: 705423751
+    locked: 0
+  - name: background medium
+    uniqueID: 1743683091
+    locked: 0
+  - name: background close
+    uniqueID: 105337917
+    locked: 0
+  - name: platforms
+    uniqueID: 3319495435
+    locked: 0
+  - name: pillars
+    uniqueID: 4036997653
+    locked: 0
+  - name: the floor background
+    uniqueID: 3342297387
+    locked: 0
+  - name: playerlevel
+    uniqueID: 2830610671
+    locked: 0
+  - name: aboveplayer
+    uniqueID: 2531022707
+    locked: 0
