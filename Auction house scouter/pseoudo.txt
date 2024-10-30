@@ -1,0 +1,17 @@
+create list of item to check
+item corresponds to a price which i will buy if there is one under
+
+disregard stars in name, disregard reforges
+negative this time so can isregard
+
+that's it
+
+give an estimate profit with the standard - selling
+
+
+note    
+    adjust the webpage so that instead of scrolling it will just push to bottom.
+    make it so that if you get a thing before it isnt shown.
+
+    some way to delete the things after seeing it?
+    

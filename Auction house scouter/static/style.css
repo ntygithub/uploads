@@ -1,0 +1,4 @@
+@font-face {
+    font-family: 'Minecraft'; /* Name of the font */
+    src: url('Minecraft.otf') format('opentype'); /* Path to your font file */
+}

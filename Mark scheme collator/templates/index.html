@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random garbage</title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="icon" href="static/icons/2cs.ico" type="image/x-icon">
+    <style>
+        common-colour {
+            color: #000000; 
+            font-size: 18px; 
+            font-weight: bold; 
+        }
+        
+        noprofit-colour {
+            color: #c22020; 
+            font-size: 16px; 
+            font-weight: bold; 
+        }
+        
+        .output-line {
+            cursor: pointer;
+            margin-bottom: 25px;
+            padding: 35px;
+            border: 1px solid #c2c2c2;
+            border-radius: 5px;
+            background-color: #b4bdc20c;
+        }
+
+        #copy-notification {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 18px;
+            font-weight: bold; 
+            border: 1px solid #c2c2c2;
+            padding: 20px 30px 50px 30px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            border-radius: 5px;
+            z-index: 9999;
+        }
+
+        .content-container {
+            margin-left: 10%; 
+            margin-right: 10%; 
+        }
+        h1 {
+        
+            text-align: center;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 0;
+            color: #000000
+        
+        }
+        p {
+            margin-top: -10px;
+            margin-left: 0px;
+            color: #000000
+
+        }
+        
+        body {
+            background-color: #ffffff; 
+            font-family: 'Minecraft', sans-serif; 
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        img {
+            margin-right: 10px; 
+            margin-top: 0px; 
+            margin-bottom: -20px; 
+        }
+
+        .tooltip {
+            position: absolute;
+            z-index: 1;
+            background-color: black;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            display: none;
+        }
+
+
+
+    </style>
+    <script>
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText("https://caiefinder.com/pastpapers/pdf/" + text);
+            const notification = document.getElementById('copy-notification');
+            notification.style.display = 'block';
+
+            setTimeout(function() {
+                notification.style.display = 'none';
+            }, 2000);
+        }
+
+    
+        function showTooltip(event, content) {
+            const tooltip = document.createElement('div');
+            tooltip.classList.add('tooltip');
+            tooltip.innerHTML = content;
+            document.body.appendChild(tooltip);
+            tooltip.style.top = event.clientY + 'px';
+            tooltip.style.left = event.clientX + 'px';
+        }
+
+        function hideTooltip() {
+            const tooltip = document.querySelector('.tooltip');
+            if (tooltip) {
+                tooltip.remove();
+            }
+        }
+
+
+    </script>
+
+
+    <div id="copy-notification">
+        *vine boom*
+    </div>
+
+    
+    
+</head>
+
+<body>
+    <h1>Random garbage</h1>
+            <div id="output-lines" class="content-container">
+                {% for data in output_data %}
+                    <div class="output-line" onclick="copyToClipboard('{{data[2]}}')" onmouseover="showTooltip(event, 'Tooltip content')" onmouseout="hideTooltip()">
+                        <common-colour style="white-space: pre-wrap;">{{ data[0] }}</common-colour>
+                        <p></p>
+                        <noprofit-colour style="white-space: pre-wrap;">{{ data[1] }}</noprofit-colour>
+                    </div>
+                {% endfor %}
+            </div>
+</body>
+</html>

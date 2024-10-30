@@ -1,0 +1,10 @@
+name: ntycommand
+version: '${project.version}'
+main: com.example.ntycommand
+commands:
+  ntycommand:
+    description: "something"
+    usage: "/ntycommand <message>"
+    aliases: [ntycommand]
+    permission: ntycommand.command.ntycommand
+    permission-message: "You cannot"

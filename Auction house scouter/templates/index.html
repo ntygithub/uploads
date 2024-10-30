@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="20">
+    <title>Skypixel Hyblock</title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="icon" href="static/icons/2cs.ico" type="image/x-icon">
+    <style>
+        common-colour {
+            color: #ffffff; 
+            font-size: 26px; 
+            font-weight: bold; 
+        }
+        uncommon-colour {
+            color: #89fc6e; 
+            font-size: 26px; 
+            font-weight: bold; 
+        }
+        rare-colour {
+            color: #5555f6; 
+            font-size: 26px; 
+            font-weight: bold; 
+        }
+        epic-colour {
+            color: #9b1fa4; 
+            font-size: 26px; 
+            font-weight: bold; 
+        }
+        legenday-colour {
+            color: #f3ae3c; 
+            font-size: 26px; 
+            font-weight: bold; 
+        }
+        mythic-colour {
+            color: #ec62f7; 
+            font-size: 26px; 
+            font-weight: bold; 
+        }
+        special-colour {
+            color: #ec625b; 
+            font-size: 26px; 
+            font-weight: bold; 
+        }
+        veryspecial-colour {
+            color: #ec625b; 
+            font-size: 26px; 
+            font-weight: bold; 
+        }
+
+        profit-colour {
+            color: #3edb75; 
+            font-size: 16px; 
+            font-weight: bold; 
+        }
+
+        noprofit-colour {
+            color: #e23636; 
+            font-size: 16px; 
+            font-weight: bold; 
+        }
+        
+        .output-line {
+            cursor: pointer;
+            margin-bottom: 25px;
+            padding: 35px;
+            border: 1px solid #1C1F2C;
+            border-radius: 15px;
+            background-color: #1C1F2C;
+        }
+
+        .wowoutput-line {
+            cursor: pointer;
+            margin-bottom: 25px;
+            padding: 35px;
+            border: 1px solid #292b46;
+            border-radius: 15px;
+            background-color: #292b46;
+        }
+
+        #copy-notification {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 18px;
+            font-weight: bold; 
+            padding: 20px 30px 50px 30px;
+            background-color: #3f415c;
+            color: white;
+            border-radius: 5px;
+            z-index: 9999;
+        }
+
+        .content-container {
+            margin-left: 10%; 
+            margin-right: 10%; 
+        }
+        h1 {
+        
+            text-align: center;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 0;
+            color: #ffffff
+        
+        }
+        p {
+            margin-top: 25px;
+            margin-left: 0px;
+            color: #ffffff
+
+        }
+        
+        body {
+            background-color: #0d0e14; 
+            font-family: 'Minecraft', sans-serif; 
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        img {
+            margin-right: 10px; 
+            margin-top: 0px; 
+            margin-bottom: -20px; 
+        }
+
+        .tooltip {
+            position: absolute;
+            z-index: 1;
+            background-color: black;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            display: none;
+        }
+
+
+
+    </style>
+    <script>
+        function scrollToBottom() {
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText("/viewauction " + text);
+            const notification = document.getElementById('copy-notification');
+            notification.style.display = 'block';
+
+            setTimeout(function() {
+                notification.style.display = 'none';
+            }, 2000);
+        }
+
+        function fetchOutputLines() {
+            fetch('/get_output_lines')
+                .then(response => response.json())
+                .then(data => {
+                    const outputList = document.getElementById('output-list');
+                    outputList.innerHTML = ''; 
+                    data.forEach(line => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = line[0]; 
+                        outputList.appendChild(listItem);
+                    });
+                });
+            scrollToBottom();
+        }
+        function showTooltip(event, content) {
+            const tooltip = document.createElement('div');
+            tooltip.classList.add('tooltip');
+            tooltip.innerHTML = content;
+            document.body.appendChild(tooltip);
+            tooltip.style.top = event.clientY + 'px';
+            tooltip.style.left = event.clientX + 'px';
+        }
+
+        function hideTooltip() {
+            const tooltip = document.querySelector('.tooltip');
+            if (tooltip) {
+                tooltip.remove();
+            }
+        }
+
+        // function scrollDownSlowly() {
+        //     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        //         window.scrollTo(0, 0);
+        //     } else {
+        //         window.scrollBy(0, 1);
+        //     }
+        // }
+
+        // window.onload = function() {
+        //     setInterval(scrollDownSlowly, 1); 
+        // };
+
+        setInterval(fetchOutputLines, 20000); 
+
+        fetchOutputLines(); 
+        scrollToBottom();
+    </script>
+
+
+    <div id="copy-notification">
+        *vine boom*
+    </div>
+
+    
+    
+</head>
+
+<body>
+    <h1>Skypixel Hyblock</h1>
+            <div id="output-lines" class="content-container">
+                {% for data in output_data %}
+                    {% if data[6] == "1" %}
+                    <div class="output-line" onclick="copyToClipboard('{{data[4]}}')" onmouseover="showTooltip(event, 'Tooltip content')" onmouseout="hideTooltip()">
+                        {% if data[3] == "COMMON" %}
+                        <common-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</common-colour>
+                        {% elif data[3] == "UNCOMMON" %}
+                        <uncommon-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</uncommon-colour>
+                        {% elif data[3] == "RARE" %}
+                        <rare-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</rare-colour>
+                        {% elif data[3] == "EPIC" %}
+                        <epic-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</epic-colour>
+                        {% elif data[3] == "LEGENDARY" %}
+                        <legenday-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</legenday-colour>
+                        {% elif data[3] == "MYTHIC" %}
+                        <mythic-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</mythic-colour>
+                        {% elif data[3] == "SPECIAL" %}
+                        <special-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</special-colour>
+                        {% elif data[3] == "VERY_SPECIAL" %}
+                        <veryspecial-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</veryspecial-colour>
+                        {% else %}
+                        <p>{{ data[0] }}</p>
+                        {% endif %}
+                        <p>{{ data[1] }}</p> 
+                        <noprofit-colour>{{ data[2] }}</noprofit-colour>
+                    </div>
+                    {% elif data[6] == "0" %}
+                    <div class="wowoutput-line" onclick="copyToClipboard('{{data[4]}}')" onmouseover="showTooltip(event, 'Tooltip content')" onmouseout="hideTooltip()">
+                        {% if data[3] == "COMMON" %}
+                        <common-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</common-colour>
+                        {% elif data[3] == "UNCOMMON" %}
+                        <uncommon-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</uncommon-colour>
+                        {% elif data[3] == "RARE" %}
+                        <rare-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</rare-colour>
+                        {% elif data[3] == "EPIC" %}
+                        <epic-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</epic-colour>
+                        {% elif data[3] == "LEGENDARY" %}
+                        <legenday-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</legenday-colour>
+                        {% elif data[3] == "MYTHIC" %}
+                        <mythic-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</mythic-colour>
+                        {% elif data[3] == "SPECIAL" %}
+                        <special-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</special-colour>
+                        {% elif data[3] == "VERY_SPECIAL" %}
+                        <veryspecial-colour><img src="{{ url_for('static', filename='icons/' + data[5] + '.png') }}" alt="Icon" width="50" height="50"onerror="this.onerror=null; this.src='/static/icons/null.png';">{{ data[0] }}</veryspecial-colour>
+                        {% else %}
+                        <p>{{ data[0] }}</p>
+                        {% endif %}
+                        <p>{{ data[1] }}</p> 
+                        <profit-colour>{{ data[2] }}</profit-colour>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+</body>
+</html>
